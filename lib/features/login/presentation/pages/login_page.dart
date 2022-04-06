@@ -1,6 +1,4 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory_checker/core/routes/router.gr.dart';
 import 'package:inventory_checker/core/themes/my_colors.dart';
 import 'package:inventory_checker/core/themes/my_input_decoration_theme.dart';
 import 'package:inventory_checker/core/utils/my_strings.dart';

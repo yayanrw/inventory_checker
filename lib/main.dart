@@ -1,107 +1,33 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:http/http.dart' as http;
+import 'package:inventory_checker/core/config/apps_config.dart';
+import 'package:inventory_checker/core/routes/router.gr.dart';
+import 'package:inventory_checker/core/themes/my_themes.dart';
+import 'package:inventory_checker/features/login/presentation/provider/login_notifier.dart';
+import 'package:provider/provider.dart';
+import 'package:inventory_checker/injection.dart' as di;
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
+void main() {
+  di.init();
+  runApp(AppWidget());
 }
 
-class _MyAppState extends State<MyApp> {
-  String _scanBarcode = 'Unknown';
+class AppWidget extends StatelessWidget {
+  AppWidget({Key? key}) : super(key: key);
+  final _appRouter = AppRouter();
 
-  @override
-  void initState() {
-    super.initState();
-    http.post(Uri.parse('http://103.157.96.97/codeigniter3-jwtauth/auth'),
-        body: {
-          'user_id': 'superuser',
-          'password': 'superuser'
-        }).then((response) {
-      print(response.body);
-    });
-  }
-
-  Future<void> startBarcodeScanStream() async {
-    FlutterBarcodeScanner.getBarcodeStreamReceiver(
-            '#ff6666', 'Cancel', true, ScanMode.QR)!
-        .listen((barcode) {
-      print(barcode);
-    });
-  }
-
-  Future<void> scanQR() async {
-    String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
-      print(barcodeScanRes);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _scanBarcode = barcodeScanRes;
-    });
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> scanBarcodeNormal() async {
-    String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _scanBarcode = barcodeScanRes;
-    });
-  }
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(title: const Text('Barcode scan')),
-            body: Builder(builder: (BuildContext context) {
-              return Container(
-                  alignment: Alignment.center,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton(
-                            onPressed: () => scanBarcodeNormal(),
-                            child: Text('Start barcode scan')),
-                        ElevatedButton(
-                            onPressed: () => scanQR(),
-                            child: Text('Start QR scan')),
-                        ElevatedButton(
-                            onPressed: () => startBarcodeScanStream(),
-                            child: Text('Start barcode scan stream')),
-                        Text('Scan result : $_scanBarcode\n',
-                            style: TextStyle(fontSize: 20))
-                      ]));
-            })));
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => di.locator<LoginNotifier>()),
+      ],
+      child: MaterialApp.router(
+        title: AppsConfig.appTitle,
+        theme: myThemes(),
+        routerDelegate: _appRouter.delegate(),
+        routeInformationParser: _appRouter.defaultRouteParser(),
+      ),
+    );
   }
 }

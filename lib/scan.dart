@@ -5,9 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(Scan());
+void main() => runApp(const Scan());
 
 class Scan extends StatefulWidget {
+  const Scan({Key? key}) : super(key: key);
+
   @override
   _ScanState createState() => _ScanState();
 }
@@ -30,9 +32,7 @@ class _ScanState extends State<Scan> {
   Future<void> startBarcodeScanStream() async {
     FlutterBarcodeScanner.getBarcodeStreamReceiver(
             '#ff6666', 'Cancel', true, ScanMode.QR)!
-        .listen((barcode) {
-      print(barcode);
-    });
+        .listen((barcode) {});
   }
 
   Future<void> scanQR() async {
@@ -41,7 +41,6 @@ class _ScanState extends State<Scan> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
