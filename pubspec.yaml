@@ -42,6 +42,11 @@ dependencies:
   build_runner: ^2.1.8
   dartz: ^0.10.1
   get_it: ^7.2.0
+  image_picker: ^0.8.5
+  image_gallery_saver: ^1.7.1
+  permission_handler: ^9.2.0
+  flutter_barcode_scanner: ^2.0.0
+  flutter_qr_reader: ^1.0.5
 
 dev_dependencies:
   flutter_test:
