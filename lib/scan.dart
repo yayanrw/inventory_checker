@@ -24,9 +24,7 @@ class _ScanState extends State<Scan> {
         body: {
           'user_id': 'superuser',
           'password': 'superuser'
-        }).then((response) {
-      print(response.body);
-    });
+        }).then((response) {});
   }
 
   Future<void> startBarcodeScanStream() async {
@@ -62,7 +60,6 @@ class _ScanState extends State<Scan> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -91,15 +88,15 @@ class _ScanState extends State<Scan> {
                       children: <Widget>[
                         ElevatedButton(
                             onPressed: () => scanBarcodeNormal(),
-                            child: Text('Start barcode scan')),
+                            child: const Text('Start barcode scan')),
                         ElevatedButton(
                             onPressed: () => scanQR(),
-                            child: Text('Start QR scan')),
+                            child: const Text('Start QR scan')),
                         ElevatedButton(
                             onPressed: () => startBarcodeScanStream(),
-                            child: Text('Start barcode scan stream')),
+                            child: const Text('Start barcode scan stream')),
                         Text('Scan result : $_scanBarcode\n',
-                            style: TextStyle(fontSize: 20))
+                            style: const TextStyle(fontSize: 20))
                       ]));
             })));
   }
