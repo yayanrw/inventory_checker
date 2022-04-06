@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:inventory_checker/core/themes/my_colors.dart';
 import 'package:inventory_checker/core/themes/my_input_decoration_theme.dart';
 import 'package:inventory_checker/core/utils/my_strings.dart';
+import 'package:inventory_checker/core/utils/request_state.dart';
 import 'package:inventory_checker/core/widgets/button/my_button.dart';
+import 'package:inventory_checker/features/login/presentation/provider/login_notifier.dart';
 import 'package:inventory_checker/features/login/presentation/widgets/dont_have_account.dart';
 import 'package:inventory_checker/features/login/presentation/widgets/forgot_password.dart';
 import 'package:inventory_checker/features/login/presentation/widgets/login_text.dart';
 import 'package:inventory_checker/features/login/presentation/widgets/login_with_google_button.dart';
 import 'package:inventory_checker/features/login/presentation/widgets/or_text.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -48,15 +51,15 @@ class _LoginPageState extends State<LoginPage> {
                     height: 32,
                   ),
                   loginText(),
-                  // Consumer<LoginNotifier>(builder: (context, value, child) {
-                  //   if (value.loginState == RequestState.loading) {
-                  //     return const Center(child: CircularProgressIndicator());
-                  //   } else if (value.loginState == RequestState.loaded) {
-                  //     return const Center(child: Text('Sudah'));
-                  //   } else {
-                  //     return Center(child: Text(value.message));
-                  //   }
-                  // }),
+                  Consumer<LoginNotifier>(builder: (context, value, child) {
+                    if (value.loginState == RequestState.loading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (value.loginState == RequestState.loaded) {
+                      return const Center(child: Text('Sudah'));
+                    } else {
+                      return Center(child: Text(value.message));
+                    }
+                  }),
                   const SizedBox(
                     height: 48,
                   ),
@@ -102,10 +105,10 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
         if (_formKey.currentState!.validate()) {
           // context.router.push();
-          // Future.microtask(() {
-          //   Provider.of<LoginNotifier>(context, listen: false)
-          //       .fetchLogin(_email.text, _password.text);
-          // });
+          Future.microtask(() {
+            Provider.of<LoginNotifier>(context, listen: false)
+                .fetchLogin(_email.text, _password.text);
+          });
         }
       },
     );

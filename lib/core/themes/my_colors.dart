@@ -1,13 +1,15 @@
 import 'dart:ui';
 
 class MyColors {
-  static Color primary = HexColor("#fc5daf");
-  static Color primaryDark = HexColor("#fe0084");
-  static Color primaryLight = HexColor("#fbbcde");
-  static Color primarySmooth = HexColor("#fde4f2");
+  static Color primary = HexColor("#0090ff");
+  static Color primaryDark = HexColor("#006dff");
+  static Color primaryLight = HexColor("#44b3ff");
+  static Color primarySmooth = HexColor("#b8ddff");
 
-  static Color secondary = HexColor("#3c3c3c");
-  static Color secondaryLight = HexColor("#979797");
+  static Color secondary = HexColor("#eeb70c");
+  static Color secondaryDark = HexColor("#ee9702");
+  static Color secondaryLight = HexColor("#f3cd4d");
+  static Color secondarySmooth = HexColor("#fae8b2");
 
   static Color textBlack = const Color(0xff222222);
   static Color textGrey = const Color(0xff94959b);

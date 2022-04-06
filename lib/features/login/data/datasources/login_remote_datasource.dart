@@ -16,11 +16,10 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
   @override
   Future<LoginModel> getLogin(String username, String password) async {
     final response = await client.post(
-      Uri.parse('${AppsConfig.baseUrl}/Login'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization':
-            'Basic ${base64Encode(utf8.encode('$username:$password'))}'
+      Uri.parse('${AppsConfig.baseUrl}/auth'),
+      body: {
+        'user_id': username,
+        'password': password,
       },
     );
 
