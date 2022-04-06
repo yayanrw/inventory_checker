@@ -5,14 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(MyApp());
+void main() => runApp(Scan());
 
-class MyApp extends StatefulWidget {
+class Scan extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _ScanState createState() => _ScanState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _ScanState extends State<Scan> {
   String _scanBarcode = 'Unknown';
 
   @override
