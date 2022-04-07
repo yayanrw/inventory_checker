@@ -4,12 +4,14 @@
 
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 CheckQrModel checkQrModelFromJson(String str) =>
     CheckQrModel.fromJson(json.decode(str));
 
 String checkQrModelToJson(CheckQrModel data) => json.encode(data.toJson());
 
-class CheckQrModel {
+class CheckQrModel extends Equatable {
   CheckQrModel({
     required this.status,
     required this.message,
@@ -31,6 +33,9 @@ class CheckQrModel {
         "message": message,
         "data": data!.toJson(),
       };
+
+  @override
+  List<Object?> get props => [status, message, data];
 }
 
 class Data {
