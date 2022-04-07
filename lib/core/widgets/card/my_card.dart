@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inventory_checker/core/config/apps_config.dart';
-import 'package:inventory_checker/core/routes/router.gr.dart';
 import 'package:inventory_checker/core/themes/my_texts.dart';
 
 class MyCard extends StatelessWidget {

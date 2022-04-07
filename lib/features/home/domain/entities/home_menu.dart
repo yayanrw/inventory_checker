@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class HomeMenu {
   String title;
   String imagePath;

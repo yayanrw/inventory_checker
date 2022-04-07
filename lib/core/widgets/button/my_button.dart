@@ -34,7 +34,7 @@ class MyButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppsConfig.defaultRadius),
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(AppsConfig.defaultPadding / 2),
+                padding: const EdgeInsets.all(AppsConfig.defaultPadding),
                 child: Text(
                   textValue,
                   style: myTexts(color: textColor ?? MyColors.white).headline5,
