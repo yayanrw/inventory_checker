@@ -19,6 +19,13 @@ class MyColors {
   // static Color bgScaffoldBackground = Color.fromARGB(255, 244, 7, 7);
 
   static Color white = const Color(0xffffffff);
+
+  static Color success = const Color(0xff00ff00);
+  static Color error = const Color(0xffff0000);
+  static Color warning = const Color(0xffffff00);
+  static Color info = const Color(0xff0000ff);
+  static Color light = const Color(0xffffffff);
+  static Color dark = const Color(0xff000000);
 }
 
 class HexColor extends Color {
