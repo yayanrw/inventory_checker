@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:inventory_checker/core/routes/auth_guard.dart';
 import 'package:inventory_checker/features/home/presentation/pages/home_page.dart';
 import 'package:inventory_checker/features/login/presentation/pages/login_page.dart';
 import 'package:inventory_checker/features/others/presentation/pages/not_found_page.dart';
@@ -20,7 +21,8 @@ import 'package:inventory_checker/features/others/presentation/pages/under_devel
       path: '/not-found',
       page: NotFoundPage,
     ),
-    AutoRoute(path: '/my-layout', page: HomePage, children: []),
+    AutoRoute(
+        path: '/home-page', page: HomePage, guards: [AuthGuard], children: []),
   ],
 )
 class $AppRouter {}
