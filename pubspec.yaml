@@ -49,6 +49,8 @@ dependencies:
   flutter_qr_reader: ^1.0.5
   flutter_svg: ^1.0.3
   flutter_iconly: ^1.0.2
+  flutter_easyloading: ^3.0.3
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
