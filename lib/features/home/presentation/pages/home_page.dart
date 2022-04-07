@@ -1,9 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory_checker/core/routes/router.gr.dart';
-import 'package:inventory_checker/core/widgets/button/my_button.dart';
-import 'package:inventory_checker/features/login/presentation/provider/login_notifier.dart';
-import 'package:provider/provider.dart';
+import 'package:inventory_checker/core/config/apps_config.dart';
+import 'package:inventory_checker/core/widgets/card/my_card.dart';
+import 'package:inventory_checker/features/home/domain/entities/home_menu.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,25 +10,21 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MyButton(
-              textValue: 'Under Development Page',
-              onPressed: () =>
-                  context.router.push(const UnderDevelopmentRoute()),
-            ),
-            MyButton(
-              textValue: 'Logout',
-              onPressed: () async {
-                await Provider.of<LoginNotifier>(context, listen: false)
-                    .logOut();
-                context.replaceRoute(const LoginRoute());
-              },
-            ),
-          ],
-        )),
+        appBar: AppBar(
+          title: const Text(AppsConfig.appTitle),
+        ),
+        body: GridView.builder(
+            padding: const EdgeInsets.all(AppsConfig.defaultPadding),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
+            itemBuilder: (context, index) {
+              return MyCard(
+                title: myHomeMenu[index].title,
+                imagePath: myHomeMenu[index].imagePath,
+                onTap: myHomeMenu[index].onTap,
+              );
+            },
+            itemCount: myHomeMenu.length),
       ),
     );
   }
