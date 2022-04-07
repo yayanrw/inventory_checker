@@ -18,10 +18,15 @@ import '../../features/login/presentation/pages/login_page.dart' as _i1;
 import '../../features/others/presentation/pages/not_found_page.dart' as _i3;
 import '../../features/others/presentation/pages/under_development_page.dart'
     as _i2;
+import 'auth_guard.dart' as _i7;
 
 class AppRouter extends _i5.RootStackRouter {
-  AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
+  AppRouter(
+      {_i6.GlobalKey<_i6.NavigatorState>? navigatorKey,
+      required this.authGuard})
       : super(navigatorKey);
+
+  final _i7.AuthGuard authGuard;
 
   @override
   final Map<String, _i5.PageFactory> pagesMap = {
@@ -48,7 +53,7 @@ class AppRouter extends _i5.RootStackRouter {
         _i5.RouteConfig(LoginRoute.name, path: '/'),
         _i5.RouteConfig(UnderDevelopmentRoute.name, path: '/under-development'),
         _i5.RouteConfig(NotFoundRoute.name, path: '/not-found'),
-        _i5.RouteConfig(HomeRoute.name, path: '/my-layout')
+        _i5.RouteConfig(HomeRoute.name, path: '/home-page', guards: [authGuard])
       ];
 }
 
@@ -80,7 +85,7 @@ class NotFoundRoute extends _i5.PageRouteInfo<void> {
 /// generated route for
 /// [_i4.HomePage]
 class HomeRoute extends _i5.PageRouteInfo<void> {
-  const HomeRoute() : super(HomeRoute.name, path: '/my-layout');
+  const HomeRoute() : super(HomeRoute.name, path: '/home-page');
 
   static const String name = 'HomeRoute';
 }
