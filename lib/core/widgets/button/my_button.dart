@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_checker/core/config/apps_config.dart';
+import 'package:inventory_checker/core/themes/my_colors.dart';
 import 'package:inventory_checker/core/themes/my_texts.dart';
 
 class MyButton extends StatelessWidget {
-  final Color buttonColor;
-  final Color textColor;
+  final Color? buttonColor;
+  final Color? textColor;
   final String textValue;
   final VoidCallback onPressed;
 
   const MyButton(
       {Key? key,
-      required this.buttonColor,
-      required this.textColor,
+      this.buttonColor,
+      this.textColor,
       required this.textValue,
       required this.onPressed})
       : super(key: key);
@@ -23,7 +24,7 @@ class MyButton extends StatelessWidget {
       elevation: 0,
       child: Container(
         decoration: BoxDecoration(
-          color: buttonColor,
+          color: buttonColor ?? MyColors.primary,
           borderRadius: BorderRadius.circular(AppsConfig.defaultRadius),
         ),
         child: Material(
@@ -36,7 +37,7 @@ class MyButton extends StatelessWidget {
                 padding: const EdgeInsets.all(AppsConfig.defaultPadding / 2),
                 child: Text(
                   textValue,
-                  style: myTexts(color: textColor).headline5,
+                  style: myTexts(color: textColor ?? MyColors.white).headline5,
                 ),
               ),
             ),
