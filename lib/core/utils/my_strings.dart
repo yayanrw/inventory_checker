@@ -33,4 +33,5 @@ class MyStrings {
   static const category = 'Category';
   static const favourite = 'Favoutite';
   static const profile = 'Profile';
+  static const failedToConnect = 'Failed to connect to the network';
 }
