@@ -3,12 +3,19 @@ import 'package:flutter/material.dart';
 class HomeMenu {
   String title;
   String imagePath;
-  VoidCallback onTap;
+  String pathName;
 
-  HomeMenu({required this.title, required this.imagePath, required this.onTap});
+  HomeMenu(
+      {required this.title, required this.imagePath, required this.pathName});
 }
 
 List<HomeMenu> myHomeMenu = [
-  HomeMenu(title: 'Check QR', imagePath: 'assets/images/404.svg', onTap: () {}),
-  HomeMenu(title: 'Scan OUT', imagePath: 'assets/images/404.svg', onTap: () {}),
+  HomeMenu(
+      title: 'Check QR',
+      imagePath: 'assets/images/404.svg',
+      pathName: '/check-qr-page'),
+  HomeMenu(
+      title: 'Scan OUT',
+      imagePath: 'assets/images/404.svg',
+      pathName: '/scan-out-page'),
 ];

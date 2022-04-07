@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:inventory_checker/core/config/apps_config.dart';
+import 'package:inventory_checker/core/routes/router.gr.dart';
 import 'package:inventory_checker/core/themes/my_texts.dart';
 
 class MyCard extends StatelessWidget {
@@ -8,12 +10,12 @@ class MyCard extends StatelessWidget {
       {Key? key,
       required this.title,
       required this.imagePath,
-      required this.onTap})
+      required this.pathName})
       : super(key: key);
 
   final String title;
   final String imagePath;
-  final VoidCallback onTap;
+  final String pathName;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class MyCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppsConfig.defaultRadius),
       ),
       child: InkWell(
-        onTap: () => onTap(),
+        onTap: () => context.router.pushNamed(pathName),
         borderRadius: BorderRadius.circular(AppsConfig.defaultRadius),
         child: Padding(
           padding: const EdgeInsets.all(AppsConfig.defaultPadding * 2),

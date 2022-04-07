@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
               return MyCard(
                 title: myHomeMenu[index].title,
                 imagePath: myHomeMenu[index].imagePath,
-                onTap: myHomeMenu[index].onTap,
+                pathName: myHomeMenu[index].pathName,
               );
             },
             itemCount: myHomeMenu.length),
