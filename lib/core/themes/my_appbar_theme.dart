@@ -7,6 +7,6 @@ AppBarTheme appBarTheme() {
     elevation: 0,
     systemOverlayStyle: SystemUiOverlayStyle.light,
     iconTheme: IconThemeData(color: MyColors.primary),
-    backgroundColor: MyColors.bgScaffoldBackground,
+    backgroundColor: MyColors.primary,
   );
 }
