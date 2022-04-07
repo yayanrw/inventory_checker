@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inventory_checker/core/themes/my_colors.dart';
 import 'package:inventory_checker/core/themes/my_input_decoration_theme.dart';
 import 'package:inventory_checker/core/utils/my_strings.dart';
@@ -53,12 +54,17 @@ class _LoginPageState extends State<LoginPage> {
                   loginText(),
                   Consumer<LoginNotifier>(builder: (context, value, child) {
                     if (value.loginState == RequestState.loading) {
-                      return const Center(child: CircularProgressIndicator());
+                      EasyLoading.show(status: 'Logging in...');
                     } else if (value.loginState == RequestState.loaded) {
-                      return const Center(child: Text('Sudah'));
+                      EasyLoading.dismiss();
+                      if (value.login.status) {
+                      } else {
+                        EasyLoading.showError(value.login.message);
+                      }
                     } else {
-                      return Center(child: Text(value.message));
+                      EasyLoading.dismiss();
                     }
+                    return const SizedBox();
                   }),
                   const SizedBox(
                     height: 48,
@@ -102,15 +108,7 @@ class _LoginPageState extends State<LoginPage> {
       buttonColor: MyColors.primary,
       textValue: MyStrings.login,
       textColor: Colors.white,
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          // context.router.push();
-          Future.microtask(() {
-            Provider.of<LoginNotifier>(context, listen: false)
-                .fetchLogin(_email.text, _password.text);
-          });
-        }
-      },
+      onPressed: () => _authenticate(),
     );
   }
 
@@ -145,6 +143,13 @@ class _LoginPageState extends State<LoginPage> {
       decoration:
           passwordInputDecoration(_passwordVisible, _togglePasswordVisibility),
     );
+  }
+
+  Future<void> _authenticate() async {
+    if (_formKey.currentState!.validate()) {
+      await Provider.of<LoginNotifier>(context, listen: false)
+          .fetchLogin(_email.text, _password.text);
+    }
   }
 
   @override
