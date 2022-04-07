@@ -7,6 +7,8 @@ import 'package:inventory_checker/features/login/presentation/provider/login_not
 import 'package:provider/provider.dart';
 import 'package:inventory_checker/injection.dart' as di;
 
+import 'core/routes/auth_guard.dart';
+
 void main() {
   di.init();
   runApp(AppWidget());
@@ -14,7 +16,7 @@ void main() {
 
 class AppWidget extends StatelessWidget {
   AppWidget({Key? key}) : super(key: key);
-  final _appRouter = AppRouter();
+  final _appRouter = AppRouter(authGuard: AuthGuard());
 
   @override
   Widget build(BuildContext context) {

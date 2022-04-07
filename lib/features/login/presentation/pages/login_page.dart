@@ -1,10 +1,14 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inventory_checker/core/themes/my_colors.dart';
 import 'package:inventory_checker/core/themes/my_input_decoration_theme.dart';
 import 'package:inventory_checker/core/utils/my_strings.dart';
+import 'package:inventory_checker/core/utils/my_validations.dart';
 import 'package:inventory_checker/core/utils/request_state.dart';
 import 'package:inventory_checker/core/widgets/button/my_button.dart';
+import 'package:inventory_checker/features/home/presentation/pages/home_page.dart';
 import 'package:inventory_checker/features/login/presentation/provider/login_notifier.dart';
 import 'package:inventory_checker/features/login/presentation/widgets/dont_have_account.dart';
 import 'package:inventory_checker/features/login/presentation/widgets/forgot_password.dart';
@@ -15,8 +19,6 @@ import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
-
-  static const routeName = '/login';
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -35,72 +37,94 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<LoginNotifier>(context, listen: false).checkSharedPreferences();
+  }
+
+  @override
+  void dispose() {
+    _formKey.currentState!.dispose();
+    _email.dispose();
+    _password.dispose();
+    _passwordVisible = false;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyColors.white,
-      resizeToAvoidBottomInset: true,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 32,
+    return Consumer<LoginNotifier>(builder: (context, value, child) {
+      if (value.isAuth) {
+        EasyLoading.dismiss();
+        return const HomePage();
+      } else {
+        if (value.loginState == RequestState.loading) {
+          EasyLoading.show(status: MyStrings.logingIn);
+        } else if (value.loginState == RequestState.loaded) {
+          EasyLoading.dismiss();
+          if (value.login.status && value.isAuth) {
+            return const HomePage();
+          } else {
+            if (value.login.message.isNotEmpty) {
+              EasyLoading.showError(value.login.message);
+            }
+          }
+        } else {
+          EasyLoading.dismiss();
+        }
+        return Scaffold(
+          backgroundColor: MyColors.white,
+          resizeToAvoidBottomInset: true,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      loginText(),
+                      const SizedBox(
+                        height: 48,
+                      ),
+                      emailTextFormField(),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      passwordTextFormField(),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      forgotPassword(context),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      loginButton(context),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      orText(),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      loginWithGoogleButton(context),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      dontHaveAccount(context),
+                    ],
                   ),
-                  loginText(),
-                  Consumer<LoginNotifier>(builder: (context, value, child) {
-                    if (value.loginState == RequestState.loading) {
-                      EasyLoading.show(status: 'Logging in...');
-                    } else if (value.loginState == RequestState.loaded) {
-                      EasyLoading.dismiss();
-                      if (value.login.status) {
-                      } else {
-                        EasyLoading.showError(value.login.message);
-                      }
-                    } else {
-                      EasyLoading.dismiss();
-                    }
-                    return const SizedBox();
-                  }),
-                  const SizedBox(
-                    height: 48,
-                  ),
-                  emailTextFormField(),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  passwordTextFormField(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  forgotPassword(context),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  loginButton(context),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  orText(),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  loginWithGoogleButton(context),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  dontHaveAccount(context),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        );
+      }
+    });
   }
 
   Widget loginButton(BuildContext context) {
@@ -115,13 +139,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget emailTextFormField() {
     return TextFormField(
       controller: _email,
-      // validator: (value) {
-      //   return Validations.isEmpty(value!)
-      //       ? Strings.fieldRequired
-      //       : Validations.isValidEmail(value)
-      //           ? null
-      //           : Strings.invalidEmail;
-      // },
+      validator: (value) {
+        return MyValidations.isEmpty(value!)
+            ? MyStrings.fieldRequired
+            : MyValidations.isValidEmail(value)
+                ? null
+                : MyStrings.invalidEmail;
+      },
       keyboardType: TextInputType.emailAddress,
       cursorColor: MyColors.primary,
       decoration: emailInputDecoration(),
@@ -131,13 +155,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget passwordTextFormField() {
     return TextFormField(
       controller: _password,
-      // validator: (value) {
-      //   return Validations.isEmpty(value!)
-      //       ? Strings.fieldRequired
-      //       : Validations.isLengthGreaterThan(value, 6)
-      //           ? null
-      //           : Strings.fieldTooShort;
-      // },
+      validator: (value) {
+        return MyValidations.isEmpty(value!)
+            ? MyStrings.fieldRequired
+            : MyValidations.isLengthGreaterThan(value, 6)
+                ? null
+                : MyStrings.fieldTooShort;
+      },
       cursorColor: MyColors.primary,
       obscureText: !_passwordVisible,
       decoration:
@@ -150,14 +174,5 @@ class _LoginPageState extends State<LoginPage> {
       await Provider.of<LoginNotifier>(context, listen: false)
           .fetchLogin(_email.text, _password.text);
     }
-  }
-
-  @override
-  void dispose() {
-    _formKey.currentState!.dispose();
-    _email.dispose();
-    _password.dispose();
-    _passwordVisible = false;
-    super.dispose();
   }
 }
