@@ -35,4 +35,5 @@ class MyStrings {
   static const profile = 'Profile';
   static const failedToConnect = 'Failed to connect to the network';
   static const logingIn = 'Logging in...';
+  static const checkQR = 'Check QRCode';
 }
