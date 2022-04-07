@@ -101,7 +101,7 @@ class LoginNotifier extends ChangeNotifier {
         _expiredToken != null) {
       _login = const Login(status: true, message: '', data: null);
     } else {
-      _login = const Login(status: false, message: '', data: null);
+      logOut();
     }
 
     notifyListeners();
