@@ -15,12 +15,11 @@ class AppWidget extends StatelessWidget {
   AppWidget({Key? key}) : super(key: key);
   final _appRouter = AppRouter();
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => di.locator<LoginNotifier>()),
+        ChangeNotifierProvider(create: (ctx) => di.locator<LoginNotifier>()),
       ],
       child: MaterialApp.router(
         title: AppsConfig.appTitle,
