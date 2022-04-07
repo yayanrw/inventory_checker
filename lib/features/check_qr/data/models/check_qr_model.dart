@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:inventory_checker/features/check_qr/domain/entities/check_qr.dart';
 
 CheckQrModel checkQrModelFromJson(String str) =>
     CheckQrModel.fromJson(json.decode(str));
@@ -12,15 +13,15 @@ CheckQrModel checkQrModelFromJson(String str) =>
 String checkQrModelToJson(CheckQrModel data) => json.encode(data.toJson());
 
 class CheckQrModel extends Equatable {
-  CheckQrModel({
+  const CheckQrModel({
     required this.status,
     required this.message,
     this.data,
   });
 
-  bool status;
-  String message;
-  Data? data;
+  final bool status;
+  final String message;
+  final Data? data;
 
   factory CheckQrModel.fromJson(Map<String, dynamic> json) => CheckQrModel(
         status: json["status"],
@@ -33,6 +34,14 @@ class CheckQrModel extends Equatable {
         "message": message,
         "data": data!.toJson(),
       };
+
+  CheckQr toEntity() {
+    return CheckQr(
+      status: status,
+      message: message,
+      data: data,
+    );
+  }
 
   @override
   List<Object?> get props => [status, message, data];

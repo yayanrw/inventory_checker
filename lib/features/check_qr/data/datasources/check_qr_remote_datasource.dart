@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:inventory_checker/core/config/apps_config.dart';
 import 'package:inventory_checker/core/utils/error/exceptions.dart';
@@ -15,14 +16,15 @@ class CheckQrRemoteDataSourceImpl implements CheckQrRemoteDataSource {
 
   @override
   Future<CheckQrModel> getByQrCode(String qrcode) async {
+    var headers = {
+      HttpHeaders.authorizationHeader: 'Bearer ${AppsConfig.token}',
+    };
+
     final response = await client.post(
       Uri.parse('${AppsConfig.baseUrlKosme}/SJP/qrcode'),
-      headers: {
-        'Authorization':
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InN1cGVydXNlciIsImVtYWlsIjoic3VwZXJ1c2VyQG1zZ2xvd2lkLmNvbSIsIm5hbWUiOiJTdXBlciBVc2VyIiwidGltZXN0YW1wIjoxNjQ5MzU2NDA3LCJ0aW1lX2V4cGlyYXRpb24iOiI1MjU5NjAiLCJleHAiOiIyMDIzLTA0LTA4IDA3OjMzOjI3In0.yLjG0arzVQoXvBeEYbL1pUxmXIwRMRXLmfWf4F0S4TM'
-      },
+      headers: headers,
       body: {
-        'qrcode': 'msgl.io/00007653',
+        'qrcode': qrcode,
       },
     );
 
