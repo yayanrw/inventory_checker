@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:inventory_checker/core/config/apps_config.dart';
 import 'package:inventory_checker/core/routes/router.gr.dart';
 import 'package:inventory_checker/core/themes/my_themes.dart';
@@ -26,6 +27,7 @@ class AppWidget extends StatelessWidget {
         theme: myThemes(),
         routerDelegate: _appRouter.delegate(),
         routeInformationParser: _appRouter.defaultRouteParser(),
+        builder: EasyLoading.init(),
       ),
     );
   }
