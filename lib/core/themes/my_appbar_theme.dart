@@ -4,7 +4,7 @@ import 'package:inventory_checker/core/themes/my_colors.dart';
 
 AppBarTheme appBarTheme() {
   return AppBarTheme(
-    elevation: 0,
+    elevation: 2,
     systemOverlayStyle: SystemUiOverlayStyle.light,
     iconTheme: IconThemeData(color: MyColors.primary),
     backgroundColor: MyColors.primary,
