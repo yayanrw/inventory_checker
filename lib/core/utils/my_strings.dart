@@ -9,7 +9,7 @@ class MyStrings {
   static const password = 'Password';
   static const rememberMe = 'Remember me';
   static const loginToYourAccount = 'Login to your\naccount';
-  static const notFound = 'Page not found';
+  static const notFound = 'Not found';
   static const underDevelopment = 'Page under development';
   static const goBack = 'Go Back!';
   static const fieldRequired = 'This field is required';
@@ -36,4 +36,6 @@ class MyStrings {
   static const failedToConnect = 'Failed to connect to the network';
   static const logingIn = 'Logging in...';
   static const checkQR = 'Check QRCode';
+  static const failedToGetPlatformException = 'Failed to get platform version.';
+  static const checkingQrCode = 'Checking QR Code...';
 }
