@@ -75,11 +75,10 @@ class _CheckQrPageState extends State<CheckQrPage> {
                                       style: myTexts(weight: FontWeight.w700)
                                           .bodyText1,
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        value.checkQr!.data!.product!,
-                                        style: myTexts().bodyText2,
-                                      ),
+                                    Text(
+                                      value.checkQr!.data!.product!,
+                                      style: myTexts().bodyText2,
+                                      maxLines: 1,
                                     ),
                                   ]),
                               const SizedBox(height: AppsConfig.defaultPadding),
