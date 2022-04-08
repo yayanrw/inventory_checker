@@ -39,6 +39,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _email.clear();
+    _password.clear();
+    _passwordVisible = false;
     Provider.of<LoginNotifier>(context, listen: false).checkSharedPreferences();
   }
 
