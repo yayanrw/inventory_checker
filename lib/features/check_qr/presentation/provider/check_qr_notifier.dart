@@ -46,4 +46,10 @@ class CheckQrNotifier extends ChangeNotifier {
       }
     });
   }
+
+  Future<void> setNull() async {
+    _checkQr = null;
+    _message = '';
+    notifyListeners();
+  }
 }
