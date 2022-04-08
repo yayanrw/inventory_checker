@@ -39,4 +39,5 @@ class MyStrings {
   static const failedToGetPlatformException = 'Failed to get platform version.';
   static const checkingQrCode = 'Checking QR Code...';
   static const logOut = 'Logout';
+  static const scanOut = 'Scan Out';
 }
